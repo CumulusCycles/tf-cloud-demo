@@ -162,7 +162,7 @@ resource "aws_security_group" "service_security_group" {
   ingress {
     from_port = 3000
     to_port   = 3000
-    protocol  = "-1"
+    protocol  = "tcp"
     security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
   }
 
