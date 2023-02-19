@@ -51,7 +51,7 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 
 resource "aws_ecs_service" "demo_app_service" {
   name            = "demo-app-service"
-  cluster         = "${aws_ecs_cluster.my_cluster.id}"
+  cluster         = "${aws_ecs_cluster.demo_app_cluster.id}"
   task_definition = "${aws_ecs_task_definition.demo_app_task.arn}"
   launch_type     = "FARGATE"
   desired_count   = 3
