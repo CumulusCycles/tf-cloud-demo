@@ -35,7 +35,7 @@ resource "aws_default_subnet" "default_subnet_c" {
 }
 
 
-resource "aws_ecs_task_definition" "demo_app2_task" {
+resource "aws_ecs_task_definition" "demo_app2b_task" {
   family                   = "demo-app2-task" # Naming our first task
   container_definitions    = <<DEFINITION
   [
@@ -132,13 +132,13 @@ resource "aws_lb_listener" "listener" {
 resource "aws_ecs_service" "demo_app2_service" {
   name            = "demo-app2-service"                             # Naming our first service
   cluster         = "${aws_ecs_cluster.demo_app2_cluster.id}"             # Referencing our created Cluster
-  task_definition = "${aws_ecs_task_definition.demo_app2_task.arn}" # Referencing the task our service will spin up
+  task_definition = "${aws_ecs_task_definition.demo_app2b_task.arn}" # Referencing the task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 3 # Setting the number of containers to 3
 
   load_balancer {
     target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
-    container_name   = "${aws_ecs_task_definition.demo_app2_task.family}"
+    container_name   = "${aws_ecs_task_definition.demo_app2b_task.family}"
     container_port   = 3000 # Specifying the container port
   }
 
