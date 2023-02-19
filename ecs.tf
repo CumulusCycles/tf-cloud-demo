@@ -48,3 +48,32 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
   role       = "${aws_iam_role.ecsTaskExecutionRole.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+
+resource "aws_ecs_service" "demo_app_service" {
+  name            = "demo-app-service"
+  cluster         = "${aws_ecs_cluster.my_cluster.id}"
+  task_definition = "${aws_ecs_task_definition.demo_app_task.arn}"
+  launch_type     = "FARGATE"
+  desired_count   = 3
+
+  network_configuration {
+    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
+    assign_public_ip = true
+  }
+}
+
+# Providing a reference to our default VPC
+resource "aws_default_vpc" "default_vpc" { }
+
+# Providing a reference to our default subnets
+resource "aws_default_subnet" "default_subnet_a" {
+  availability_zone = "us_east_1a"
+}
+
+resource "aws_default_subnet" "default_subnet_b" {
+  availability_zone = "us_east_1b"
+}
+
+resource "aws_default_subnet" "default_subnet_c" {
+  availability_zone = "us_east_1c"
+}
