@@ -8,3 +8,7 @@ terraform {
     }
   }
 }
+
+resource "aws_ecr_repository" "demo_app2_ecr_repo" {
+  name = "demo-app2-ecr-repo"
+}
