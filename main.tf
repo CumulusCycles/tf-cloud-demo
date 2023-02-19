@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "demo_app2_task" {
       "portMappings": [
         {
           "containerPort": 3000,
-          "hostPort": 3000
+          "hostPort": 0
         }
       ],
       "memory": 512,
